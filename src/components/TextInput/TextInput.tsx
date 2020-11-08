@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 import React, { FunctionComponent } from "react";
 import { StyledTextInput } from "./styles/StyledTextInput";
-import { InputProps } from "./types/TextInputTypes";
+import { InputProps } from "../types/TextInputTypes";
 
 const TextInput: FunctionComponent<InputProps> = ({
   placeholder,

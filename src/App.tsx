@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React, { FunctionComponent } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
@@ -19,7 +18,6 @@ const App: FunctionComponent<AppProps> = ({ name }) => {
           <Route exact path="/restaurants" component={Restaurants} />
         </Switch>
       </BrowserRouter>
-      <Home />
       <span>{name}</span>
     </div>
   );

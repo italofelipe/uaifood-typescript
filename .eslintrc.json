@@ -27,6 +27,9 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
+    "no-use-before-define": "off",
+    "no-unused-vars": "off",
+    "no-console": "off",
     "import/extensions": "off",
     "eslint no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["warn"],
