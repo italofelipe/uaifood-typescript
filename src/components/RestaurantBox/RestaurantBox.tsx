@@ -18,15 +18,12 @@ const RestaurantBox: React.FC<Restaurant> = (props) => {
     const restaurantDetails = await http.get(`restaurant?res_id=${id}`);
 
     const response = restaurantDetails?.data;
-    const imageURL = response.data.featured_image;
-    console.log(response);
+    const imageURL = response.data?.featured_image;
     setImg(imageURL || "");
   };
 
   fetchRestaurantDetail();
-  useEffect(() => {
-    console.log("PROPS ID ", props.id);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <StyledRestaurantBox>
       <StyledRestaurantImage src={img} />

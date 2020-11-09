@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 export interface Restaurant {
+  average_cost_for_two: number;
   id: string;
   name: string;
   currency: string;

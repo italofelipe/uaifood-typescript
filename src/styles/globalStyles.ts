@@ -5,10 +5,11 @@ import bgIMG from "../assets/bg.jpg";
 interface CProps {
   background: string;
   align: string;
+  row?: boolean;
 }
 const Container = styled.main`
   display: flex;
-  flex-flow: column;
+  flex-flow: ${(props: CProps) => (props.row ? "row" : "column")};
   width: 100vw;
   height: 100vh;
   background-image: ${(props: CProps) =>
@@ -36,6 +37,12 @@ const StyledH1 = styled.h1`
   font-family: "Open Sans", sans-serif;
   color: ${(props) => props.color || "#FFF"};
 `;
+const StyledH3 = styled.h3`
+  font-size: 22px;
+  color: #484848;
+  font-family: "Open Sans", sans-serif;
+  color: ${(props) => props.color || "#FFF"};
+`;
 const StyledForm = styled.form`
   width: 60%;
   display: flex;
@@ -59,6 +66,7 @@ export {
   Container,
   StyledP,
   StyledH1,
+  StyledH3,
   StyledInputContainer,
   subText,
   StyledForm,

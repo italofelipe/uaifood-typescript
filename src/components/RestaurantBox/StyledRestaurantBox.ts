@@ -1,13 +1,7 @@
 import styled from "styled-components";
 
-const StyledRestaurantContainer = styled.section`
-  height: auto;
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-`;
 const StyledRestaurantBox = styled.div`
-  width: 20%;
+  width: 30%;
   height: auto;
   display: flex;
   flex-flow: column;
@@ -31,7 +25,6 @@ const StyledRestaurantBoxTitle = styled.h3`
 
 export {
   StyledRestaurantBox,
-  StyledRestaurantContainer,
   StyledRestaurantBottomBox,
   StyledRestaurantBoxTitle,
   StyledRestaurantImage,
