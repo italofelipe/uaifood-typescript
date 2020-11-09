@@ -2,16 +2,13 @@
 /* eslint-disable no-use-before-define */
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Suggestion } from "../types/SuggestionsTypes";
 import {
   StyledSuggestionBox,
   StyledSuggestionText,
   StyledSuggestionSubtext,
 } from "./StyledSuggestionBox";
+import { ISuggestion } from "./suggestionTypes";
 
-interface ISuggestion {
-  suggestions: Suggestion;
-}
 const SuggestionBox: React.FC<any> = (props: ISuggestion) => {
   useEffect(() => {
     console.log("Suggestion: ", props);

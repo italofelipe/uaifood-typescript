@@ -4,32 +4,27 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import http from "../services/http";
-import { Container, StyledH3 } from "../styles/globalStyles";
+import http from "../../services/http";
+import { Container, StyledH3 } from "../../styles/globalStyles";
 
-import Header from "../components/Header/Header";
-import RestaurantBox from "../components/RestaurantBox/RestaurantBox";
-import { Restaurant } from "../types/restaurantType";
+import Header from "../../components/Header/Header";
+import RestaurantBox from "../../components/RestaurantBox/RestaurantBox";
+import { Restaurant } from "../../types/restaurantType";
 import {
   StyledRestaurantsContainer,
   StyledRestaurantsPageContainer,
-} from "./Restaurants/StyledRestaurants";
-import Aside from "../components/Aside/Aside";
-import { Filters, FiltersEnum } from "../types/filterTypes";
-
-interface RProps {
-  location: any;
-  history: any;
-  match: any;
-}
+} from "./StyledRestaurants";
+import Aside from "../../components/Aside/Aside";
+import { Filters } from "../../types/filterTypes";
+import { RProps } from "./restaurantsTypes";
 
 const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
   // Buscar o location vindo do React-Router-DOM
   const { location } = props as RProps;
   const [data, setData] = useState<Restaurant[]>([]);
   const [IDS, setIDS] = useState<string[]>([]);
-  const [costFiltered, setCostFiltered] = useState<any>([]);
-  const [rating, setRatingFiltered] = useState<any>([]);
+  const [costFiltered, setCostFiltered] = useState<Restaurant[]>([]);
+  const [rating, setRatingFiltered] = useState<Restaurant[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,6 +65,7 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
             res.restaurant.average_cost_for_two >= filter.payload,
         );
         console.log("Dados filtrados", filteredCost);
+        setCostFiltered(filteredCost);
         return filteredCost;
       case "rating":
         const filteredRating = data.filter(
@@ -77,6 +73,7 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
             res.restaurant.user_rating.aggregate_rating >= filter.payload,
         );
         console.log("Filtro por nota", filteredRating);
+        setRatingFiltered(filteredRating);
         return filteredRating;
 
       default:

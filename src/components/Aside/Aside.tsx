@@ -1,8 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from "react";
-import { Filters } from "../../types/filterTypes";
-import { Restaurant } from "../../types/restaurantType";
 import filters from "../../utils/filters";
+import { AProps } from "./asideTypes";
 import {
   StyledAside,
   StyledAsideCheckbox,
@@ -11,12 +10,6 @@ import {
   StyledAsideRatingsBox,
   StyledAsideText,
 } from "./StyledAside";
-
-interface AProps {
-  cost: (args: Filters) => Restaurant[] | 10000;
-  rating: (args: Filters) => Restaurant[] | 5;
-  cousine?: (e: number) => Restaurant[] | null;
-}
 
 const Aside: React.FC<AProps> = (props) => {
   const [rating, setRating] = useState<number | null>();

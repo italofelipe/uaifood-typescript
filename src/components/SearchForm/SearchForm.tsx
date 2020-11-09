@@ -1,19 +1,15 @@
 import React, { useState, FunctionComponent, useEffect } from "react";
-import { Link } from "react-router-dom";
-import SearchForm from "../components/SearchForm/SearchForm";
-import SuggestionBox from "../components/SuggestionBox/SuggestionBox";
-import TextInput from "../components/TextInput/TextInput";
-import { Suggestion } from "../components/types/SuggestionsTypes";
-import http from "../services/http";
+import SuggestionBox from "../SuggestionBox/SuggestionBox";
+import TextInput from "../TextInput/TextInput";
+import { Suggestion } from "../types/SuggestionsTypes";
+import http from "../../services/http";
 import {
-  Container,
-  StyledH1,
   StyledCTAButton,
   StyledForm,
   StyledInputContainer,
-} from "../styles/globalStyles";
+} from "../../styles/globalStyles";
 
-const Home: React.FC<any> = () => {
+const SearchForm: React.FC<any> = () => {
   const [suggestions, setSuggestions] = useState<Suggestion | null>(null);
 
   const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,10 +29,18 @@ const Home: React.FC<any> = () => {
     console.log("Sugestoes:", suggestions);
   }, [suggestions]);
   return (
-    <Container align="center" background="food">
-      <SearchForm />
-    </Container>
+    <StyledForm>
+      <StyledInputContainer>
+        <TextInput
+          placeholder="Digite uma cidade"
+          change={(e) => handleInput(e)}
+        />
+        {suggestions && <SuggestionBox suggestions={suggestions} />}
+      </StyledInputContainer>
+
+      <StyledCTAButton>Buscar</StyledCTAButton>
+    </StyledForm>
   );
 };
 
-export default Home;
+export default SearchForm;

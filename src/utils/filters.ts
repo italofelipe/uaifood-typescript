@@ -1,11 +1,11 @@
 /* eslint-disable no-shadow */
 const filters: Filters = {
   evaluation: [
-    { rating: 1, query: "" },
-    { rating: 2, query: "" },
-    { rating: 3, query: "" },
-    { rating: 4, query: "" },
-    { rating: 5, query: "" },
+    { rating: 1 },
+    { rating: 2 },
+    { rating: 3 },
+    { rating: 4 },
+    { rating: 5 },
   ],
   cousine: [
     { type: "Chinese", cousineId: 25 },
@@ -22,7 +22,6 @@ interface Filters {
 
 type Evaluation = {
   rating: number;
-  query: string;
 };
 type Cousine = {
   type: string;

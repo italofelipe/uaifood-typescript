@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Aside from "./components/Aside/Aside";
 import Home from "./pages/Home";
-import Restaurants from "./pages/Restaurants";
+import Restaurants from "./pages/Restaurants/Restaurants";
 import { AppProps } from "./types/AppProps";
 
 /* TODO: Pegar da API de Geolocalização do Browser a localização
