@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Restaurants from "./pages/Restaurants/Restaurants";
 import { AppProps } from "./types/AppProps";
 

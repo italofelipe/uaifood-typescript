@@ -1,32 +1,30 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-use-before-define */
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import {
   StyledSuggestionBox,
   StyledSuggestionText,
   StyledSuggestionSubtext,
+  StyledLink,
 } from "./StyledSuggestionBox";
 import { ISuggestion } from "./suggestionTypes";
 
-const SuggestionBox: React.FC<any> = (props: ISuggestion) => {
+const SuggestionBox: React.FC<any> = ({ suggestions }: ISuggestion) => {
   useEffect(() => {
-    console.log("Suggestion: ", props);
-    console.log("Suggestion: NAME", props.suggestions);
+    console.log("Suggestion: ", suggestions);
+    console.log("Suggestion: NAME", suggestions);
   });
   return (
     <StyledSuggestionBox>
-      <Link
+      <StyledLink
         to={{
           pathname: "/restaurants",
-          state: props,
+          state: suggestions,
         }}
       >
-        <StyledSuggestionText>{props.suggestions.name}</StyledSuggestionText>
+        <StyledSuggestionText>{suggestions.name}</StyledSuggestionText>
         <StyledSuggestionSubtext>
-          {props.suggestions.id}
+          {suggestions.country_name}
         </StyledSuggestionSubtext>
-      </Link>
+      </StyledLink>
     </StyledSuggestionBox>
   );
 };

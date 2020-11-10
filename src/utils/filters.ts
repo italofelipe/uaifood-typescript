@@ -30,8 +30,5 @@ type Cousine = {
 type Cost = {
   price: number;
 };
-enum CousinesTypesEnum {
-  "Chinese",
-  "Brazilian",
-}
+
 export default filters;

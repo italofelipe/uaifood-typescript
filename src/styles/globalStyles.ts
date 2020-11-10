@@ -49,6 +49,7 @@ const StyledForm = styled.form`
   flex-flow: row;
   align-self: center;
   justify-self: center;
+  align-items: center;
 `;
 const StyledInputContainer = styled.div`
   flex-flow: column;

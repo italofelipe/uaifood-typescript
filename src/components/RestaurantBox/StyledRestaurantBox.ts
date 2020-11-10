@@ -40,7 +40,8 @@ const StyledRestaurantLowerTile = styled.span`
     props.price ? "#39b54a" : "#CCC"};
   color: ${(props: StyledRestaurantLowerTileTypes) =>
     props.price ? "#FFF" : "#333"};
-  height: 20px;
+  height: ${(props: StyledRestaurantLowerTileTypes) =>
+    props.price ? "20px" : "auto"};
   padding: 5px;
   margin-left: ${(props: StyledRestaurantLowerTileTypes) =>
     props.price ? "0" : "5px"}; ;

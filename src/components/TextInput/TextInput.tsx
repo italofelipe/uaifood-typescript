@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-use-before-define */
 import React, { FunctionComponent } from "react";
-import { StyledTextInput } from "./styles/StyledTextInput";
+import { StyledTextInput } from "./StyledTextInput";
 import { InputProps } from "../types/TextInputTypes";
 
 const TextInput: FunctionComponent<InputProps> = ({

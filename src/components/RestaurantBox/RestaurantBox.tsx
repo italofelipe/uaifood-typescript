@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unused-prop-types */
-import React, { useEffect, ReactNode, useState } from "react";
+import React, { useEffect, useState } from "react";
 import http from "../../services/http";
 import { Restaurant } from "../../types/restaurantType";
 
@@ -16,16 +15,7 @@ import {
 const RestaurantBox: React.FC<Restaurant> = (props) => {
   // Buscar o location vindo do React-Router-DOM
   const [img, setImg] = useState<string>("");
-  const {
-    currency,
-    location,
-    phoneNumbers,
-    cuisines,
-    name,
-    image,
-    id,
-    average_cost_for_two: averageCost,
-  } = props;
+  const { currency, location, phoneNumbers, cuisines, name, image, id } = props;
   console.log("Location:", location);
   const fetchRestaurantDetail = async () => {
     const restaurantDetails = await http.get(`restaurant?res_id=${id}`);
@@ -37,7 +27,6 @@ const RestaurantBox: React.FC<Restaurant> = (props) => {
         "https://olharconceito.com.br/imgsite/noticias/comida-congelada-como-fazer-00.jpg",
     );
   };
-  console.log("average_cost_for_two", averageCost);
   fetchRestaurantDetail();
   useEffect(() => {}, []);
   return (

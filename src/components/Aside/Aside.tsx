@@ -1,11 +1,9 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from "react";
 import filters from "../../utils/filters";
 import { AProps } from "./asideTypes";
 import {
   StyledAside,
   StyledAsideCheckbox,
-  StyledAsideGlyph,
   StyledAsideLabel,
   StyledAsideRatingsBox,
   StyledAsideText,
@@ -74,6 +72,21 @@ const Aside: React.FC<AProps> = (props) => {
         </StyledAsideRatingsBox>
       ))}
       <StyledAsideText>Tipo de cozinha</StyledAsideText>
+      {filters.cousine.map((cou, i) => (
+        <StyledAsideRatingsBox key={i}>
+          <StyledAsideLabel htmlFor={`rating ${cou.type}`} key={i}>
+            {cou.type}
+          </StyledAsideLabel>
+          <StyledAsideCheckbox
+            id={`price ${cou.type}`}
+            name="price"
+            type="checkbox"
+            value={cou.type}
+            checked={cousine === cou.type}
+            onChange={(e) => handleCheckbox(e, cou.cousineId)}
+          />
+        </StyledAsideRatingsBox>
+      ))}
     </StyledAside>
   );
 };

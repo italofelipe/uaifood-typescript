@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SuggestionBox from "../SuggestionBox/SuggestionBox";
 import TextInput from "../TextInput/TextInput";
 import { Suggestion } from "../types/SuggestionsTypes";
