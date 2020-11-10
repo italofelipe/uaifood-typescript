@@ -1,15 +1,14 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Restaurants from "./pages/Restaurants/Restaurants";
-import { AppProps } from "./types/AppProps";
 
 /* TODO: Pegar da API de Geolocalização do Browser a localização
 * do browser, e com isso, sugerir restaurantes próximos naquela 
 região
 */
 
-const App: FunctionComponent<AppProps> = ({ name }) => {
+const App: React.FC = () => {
   return (
     <div className="App">
       <BrowserRouter>
@@ -18,7 +17,6 @@ const App: FunctionComponent<AppProps> = ({ name }) => {
           <Route exact path="/restaurants" component={Restaurants} />
         </Switch>
       </BrowserRouter>
-      <span>{name}</span>
     </div>
   );
 };
