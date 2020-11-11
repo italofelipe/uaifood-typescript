@@ -58,10 +58,11 @@ const StyledInputContainer = styled.div`
 
 const StyledCTAButton = styled.button`
   width: 120px;
-  height: 40px;
+  height: 45px;
   background: #39b54a;
   font-weight: bold;
   color: #fff;
+  border: none;
 `;
 export {
   Container,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Cousine, CousineTypes } from "../../types/cousineTypes";
 import filters from "../../utils/filters";
 import { AProps } from "./asideTypes";
 import {
@@ -10,17 +11,16 @@ import {
 } from "./StyledAside";
 
 const Aside: React.FC<AProps> = (props) => {
+  const { cousines: cousinesTypeProps } = props;
   const [rating, setRating] = useState<number | null>();
-  const [cousine, setCousine] = useState<string | null>("");
   const [price, setPrice] = useState<number | null>(20);
-
+  const [cousinesType, setCousinesType] = useState<Cousine | null>(null);
+  useEffect(() => {}, []);
   const handleCheckbox = (
     e: React.ChangeEvent<HTMLInputElement>,
-    payload: number,
+    payload: any,
   ) => {
-    console.log("O que foi clicadooo:", e.target.name);
-    console.log("O que temos no payload:", payload);
-
+    e.preventDefault();
     if (e.target.name === "price") {
       setPrice(payload);
       props?.cost({ filterType: "cost", payload });
@@ -29,13 +29,10 @@ const Aside: React.FC<AProps> = (props) => {
       setRating(payload);
       props?.rating({ filterType: "rating", payload });
     }
-    /* if (e.target.name === "cousine") {
-      setRating(payload);
-      props.cousine(cost.price);
+    if (e.target.name === "cousine") {
+      setCousinesType(payload?.cuisine_id);
+      props.cousine({ filterType: "cousine", payload: payload?.cuisine_id });
     }
-    */
-    console.log("Price:", price);
-    console.log("Rating:", rating);
   };
   return (
     <StyledAside>
@@ -48,7 +45,7 @@ const Aside: React.FC<AProps> = (props) => {
           <StyledAsideCheckbox
             id={`rating ${ev.rating}`}
             name="rating"
-            type="checkbox"
+            type="radio"
             value={ev.rating}
             checked={rating === ev.rating}
             onChange={(e) => handleCheckbox(e, ev.rating)}
@@ -64,7 +61,7 @@ const Aside: React.FC<AProps> = (props) => {
           <StyledAsideCheckbox
             id={`price ${cost.price}`}
             name="price"
-            type="checkbox"
+            type="radio"
             value={cost.price}
             checked={price === cost.price}
             onChange={(e) => handleCheckbox(e, cost.price)}
@@ -72,21 +69,22 @@ const Aside: React.FC<AProps> = (props) => {
         </StyledAsideRatingsBox>
       ))}
       <StyledAsideText>Tipo de cozinha</StyledAsideText>
-      {filters.cousine.map((cou, i) => (
-        <StyledAsideRatingsBox key={i}>
-          <StyledAsideLabel htmlFor={`rating ${cou.type}`} key={i}>
-            {cou.type}
-          </StyledAsideLabel>
-          <StyledAsideCheckbox
-            id={`price ${cou.type}`}
-            name="price"
-            type="checkbox"
-            value={cou.type}
-            checked={cousine === cou.type}
-            onChange={(e) => handleCheckbox(e, cou.cousineId)}
-          />
-        </StyledAsideRatingsBox>
-      ))}
+      {cousinesTypeProps &&
+        cousinesTypeProps.map((cou, i) => (
+          <StyledAsideRatingsBox key={i}>
+            <StyledAsideLabel htmlFor={`rating ${cou.cuisine_name}`} key={i}>
+              {cou.cuisine_name}
+            </StyledAsideLabel>
+            <StyledAsideCheckbox
+              id={`cousine ${cou.cuisine_id}`}
+              name="cousine"
+              type="radio"
+              value={cou.cuisine_name}
+              checked={cousinesType?.cuisine_id === cou.cuisine_id}
+              onChange={(e) => handleCheckbox(e, cou)}
+            />
+          </StyledAsideRatingsBox>
+        ))}
     </StyledAside>
   );
 };

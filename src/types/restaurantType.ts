@@ -7,6 +7,7 @@ export interface Restaurant {
   phoneNumbers: string;
   image: string;
   restaurant?: any;
+  average_cost_for_two: number;
 }
 
 interface Location {

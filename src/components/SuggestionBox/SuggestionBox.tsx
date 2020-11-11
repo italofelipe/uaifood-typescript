@@ -8,10 +8,6 @@ import {
 import { ISuggestion } from "./suggestionTypes";
 
 const SuggestionBox: React.FC<any> = ({ suggestions }: ISuggestion) => {
-  useEffect(() => {
-    console.log("Suggestion: ", suggestions);
-    console.log("Suggestion: NAME", suggestions);
-  });
   return (
     <StyledSuggestionBox>
       <StyledLink

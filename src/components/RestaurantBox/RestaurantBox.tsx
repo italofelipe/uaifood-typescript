@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import http from "../../services/http";
 import { Restaurant } from "../../types/restaurantType";
 
@@ -13,10 +13,17 @@ import {
 } from "./StyledRestaurantBox";
 
 const RestaurantBox: React.FC<Restaurant> = (props) => {
-  // Buscar o location vindo do React-Router-DOM
   const [img, setImg] = useState<string>("");
-  const { currency, location, phoneNumbers, cuisines, name, image, id } = props;
-  console.log("Location:", location);
+  const {
+    currency,
+    location,
+    phoneNumbers,
+    cuisines,
+    name,
+    image,
+    id,
+    average_cost_for_two,
+  } = props;
   const fetchRestaurantDetail = async () => {
     const restaurantDetails = await http.get(`restaurant?res_id=${id}`);
 
@@ -28,7 +35,6 @@ const RestaurantBox: React.FC<Restaurant> = (props) => {
     );
   };
   fetchRestaurantDetail();
-  useEffect(() => {}, []);
   return (
     <StyledRestaurantBox>
       <StyledRestaurantImage src={img} />
@@ -40,7 +46,7 @@ const RestaurantBox: React.FC<Restaurant> = (props) => {
         <StyledRestaurantLowerTiles>
           <StyledRestaurantLowerTile price>
             {currency}
-            70
+            {average_cost_for_two}
           </StyledRestaurantLowerTile>
           <StyledRestaurantLowerTile>{cuisines}</StyledRestaurantLowerTile>
         </StyledRestaurantLowerTiles>

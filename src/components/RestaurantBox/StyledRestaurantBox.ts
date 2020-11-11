@@ -9,6 +9,9 @@ const StyledRestaurantBox = styled.div`
   border: 1px solid #333;
   box-shadow: 4px 4px 15px #ccc;
   margin: 15px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const StyledRestaurantBottomBox = styled.div`
   display: flex;

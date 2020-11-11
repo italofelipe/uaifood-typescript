@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import { Suggestion } from "../../components/types/SuggestionsTypes";
 import { Container } from "../../styles/globalStyles";

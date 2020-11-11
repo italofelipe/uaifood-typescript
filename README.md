@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# Desafio da Evnts:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Seja muito bem vindo a minha implementação do desafio para a vaga de Front End Developer da Evnts.
 
-## Available Scripts
+## Tecnologias usadas
 
-In the project directory, you can run:
+Para a execução desse desafio, foram usadas as bibliotecas React, React Router DOM, Axios, Styled Components e Font Awesome. TypeScript,ES Lint e Prettier foram usados no modo de desenvolvimento, para detectar possíveis erros no código, embora algumas regras tenham sido desativadas.
 
-### `yarn start`
+### Como executar o projeto:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para executar o projeto, basta clonar o repositório, e em seguida, instalar as dependências usando NPM ou YARN. Ambos exigem que voce tenha instalado na sua maquina o Node.js.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+O comando para instalar as dependências é npm i ou yarn, dentro da pasta do projeto.
+Caso nao tenha o Node instalado, segue abaixo o link. Ao instalar o Node, o npm é instalado por padrão.
 
-### `yarn test`
+Node: https://nodejs.org/en/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Talk to the DEV (Motivação e escolhas)
 
-### `yarn build`
+Para executar o projeto, primeiro pensei em componentizar cada elemento que poderia ter dados próprios, ainda que esses dados fossem passados via props, e também componentizar elementos que podem disparar funções, como é o caso de botões, inputs e etc.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Dado o grau de complexidade do projeto, não julguei necessário o uso de Redux. Percebi que o Redux seria uma solução totalmente "overkill" para a implementação desse desafio, seria como "matar um mosquito com um tanque de guerra". Particularmente, prefiro manter a aplicação o mais "enxuta" possível, e usar gerenciadores de estado somente se for necessário, pois lidar com actions e sagas (Redux Saga para side effects) aumenta consideravelmente a complexidade da aplicação, e ao meu ver, seria desnecessário usá-los para uma aplicação tão simples. Context API também poderia ser usado, mas entraria na questão que mencionei de manter a aplicação simples.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Praticamente todos os elementos visuais da aplicação são feitos em Styled Components, uma ferramenta que possui uma escrita muito semelhante ao SASS, e dá "poderes" de estilização incríveis ao React. Prefiro esta abordagem à criação de classes nos elementos HTML renderizados no React. Styled Components deixa o CSS um pouco mais limpo e através das props, é possível deixar praticamente tudo dinâmico com pouquíssimas linhas, diferente do CSS, que precisariam ser criadas diferentes classes de acordo com eventos, hover e etc. Styled Components facilita muito a vida nesse aspecto, e acredito ser a solução mais inteligente e robusta para o desenvolvimento estilização em React nos dias de hoje.
+- Para as rotas da aplicação, foi usado React Router DOM, que vem com uma API muito simples de se usar, e extremamente poderosa, sendo possivel transitar dados entre rotas com muita facilidade.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Known issues:
 
-### `yarn eject`
+- Apesar da simplicidade da aplicação, tive alguns problemas pessoais com o tempo e também envolvendo o limite de requisições imposta pela Zomato, portanto, já deixarei aqui o que nao foi implementado.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  - Componente de input de busca não redireciona o usuario para a listagem de restaurantes contendo os dados digitados quando o usuário já está na rota "/restaurants". Esse comportamento nao acontece quando o usuário está na rota "/".
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  - Botão call to action de buscar: A maneira como o input foi pensado inicialmente não necessitava de um botão call to action, já que o input por si só já fazia o "trabalho pesado" de alterar o valor e passá-lo ao componente de form, que por sua vez, manda requisições GET ao endpoint passando como query String o valor do input, e renderiza as sugestões baseadas no retorno dessa requisição. A aplicação nao precisa de um evento "submit", uma vez que cada vez que o usuário digita, é acionado um "gatilho" que busca os dados com base no valor do input, tornando assim o botão inútil.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  - Busca por tipo de restaurante: Toda a lógica para essa feature foi feita, porém, a limitação de requests na API da Zomato praticamente a inviabilizou, tendo em vista que por 5 dias consecutivos, estourei o limite de requests (já já um representante deles vem bater na minha porta perguntando o que eu to fazendo pra consumir tantos dados assim, hehe) e assim, ficava limitado a fazer requests para pesquisar uma cidade ("/home") e listar os restaurantes na região ("/restaurants"). Os outros dois filtros foram implementados sem muitos problemas, uma vez que os dados necessários para sua implementação já estavam presentes na aplicação.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - Double click nos filtros: Esse bug pode acontecer, os checkboxes as vezes não se comportam como esperado, necessitando double click para que seu efeito seja aplicado. Acredito que esse bug seja causado pela quantidade de calculos/funcoes que tenha que fazer e re-renderizar o componente de restaurantes, uma vez que nao fiz uso do useMemo ou useCallback

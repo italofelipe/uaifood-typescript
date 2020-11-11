@@ -17,17 +17,14 @@ const SearchForm: React.FC<any> = () => {
       try {
         const normallized = e.target.value.trim().toLowerCase();
         const response = await http.get(`cities?q=${normallized}`);
-        console.log("Response:", response);
         setSuggestions(response.data.location_suggestions[0]);
       } catch (error) {
-        console.error("DEU PAU", error);
+        console.error("Erro ao processar request.", error);
         setSuggestions(null);
       }
     }, 800);
   };
-  useEffect(() => {
-    console.log("Sugestoes:", suggestions);
-  }, [suggestions]);
+  useEffect(() => {}, [suggestions]);
   return (
     <StyledForm>
       <StyledInputContainer>

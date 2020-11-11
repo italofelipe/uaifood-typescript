@@ -13,13 +13,18 @@ import {
 import Aside from "../../components/Aside/Aside";
 import { Filters } from "../../types/filterTypes";
 import { RProps } from "./restaurantsTypes";
+import { Cousine, CousineTypes } from "../../types/cousineTypes";
 
 const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
   const { location } = props as RProps;
   const [data, setData] = useState<Restaurant[]>([]);
   const [IDS, setIDS] = useState<string[]>([]);
+  // Filtros
   const [costFiltered, setCostFiltered] = useState<Restaurant[]>([]);
-  const [rating, setRatingFiltered] = useState<Restaurant[]>([]);
+  const [ratingFiltered, setRatingFiltered] = useState<Restaurant[]>([]);
+  const [cousinesTypes, setCousinesTypes] = useState<Cousine[]>([]);
+  const [allFiltered, setAllFiltered] = useState<Restaurant[]>([]);
+  // Tratamento de erros
   const [customError, setCustomError] = useState<string | null>(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -27,10 +32,9 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
         const locationID = location.state.id;
 
         const restaurant = await http.get(
-          `search?entity_id=${locationID}&entity_type=city&radius=50&count=4`,
+          `search?entity_id=${locationID}&entity_type=city&radius=50&count=20`,
         );
         const restaurants = restaurant?.data.restaurants;
-        console.log("restaurants", restaurants);
 
         setData(restaurants);
         const restaurantsIDS = restaurants.map(
@@ -40,8 +44,8 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
 
         // Buscar as cozinhas pelo id da cidade Ex: bsb - cod 66
         const placeCousines = await http.get(`cuisines?city_id=${locationID}`);
-        const cousinesResponse = placeCousines.data;
-        console.log("Cousines Response:", cousinesResponse);
+        const cousinesResponse: Cousine[] = placeCousines.data;
+        setCousinesTypes(cousinesResponse);
       } catch (error) {
         console.error("DEU PAU nos restaurantes");
         setCustomError("Houve um erro ao buscar os restaurantes");
@@ -49,21 +53,26 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
     };
     fetchData();
   }, []);
-  useEffect(() => {
-    console.log("Filtro de custos:", costFiltered);
-    console.log("Filtro de rating:", rating);
-  }, [costFiltered, rating]);
-  const applyFilters = (filter: Filters) => {
+  useEffect(() => {}, [costFiltered, ratingFiltered, allFiltered]);
+
+  const applyFilters = (filter: Filters): any => {
     switch (filter.filterType) {
       case "cost": {
-        console.log("Filtro:", filter);
-        console.log("Precos:", data[0].restaurant.average_cost_for_two);
         const filteredCost = data.filter(
           (res: Restaurant) =>
-            res.restaurant.average_cost_for_two >= filter.payload,
+            res.restaurant.average_cost_for_two <= filter.payload,
         );
-        console.log("Dados filtrados", filteredCost);
         setCostFiltered(filteredCost);
+
+        if (ratingFiltered) {
+          const joinedFilters = [...costFiltered, ...ratingFiltered];
+          const sanitizedData = joinedFilters.filter(
+            (item, index) => joinedFilters.indexOf(item) === index,
+          );
+          setAllFiltered([...sanitizedData]);
+        } else {
+          setAllFiltered([...filteredCost]);
+        }
         return filteredCost;
       }
 
@@ -72,8 +81,17 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
           (res: Restaurant) =>
             res.restaurant.user_rating.aggregate_rating >= filter.payload,
         );
-        console.log("Filtro por nota", filteredRating);
-        setRatingFiltered(filteredRating);
+        setRatingFiltered(costFiltered);
+        if (costFiltered) {
+          const joinedFilters = [...costFiltered, ...filteredRating];
+          const sanitizedData = joinedFilters.filter(
+            (item, index) => joinedFilters.indexOf(item) === index,
+          );
+          setAllFiltered([...sanitizedData]);
+        } else {
+          setAllFiltered([...filteredRating]);
+        }
+
         return filteredRating;
       }
 
@@ -92,6 +110,10 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
           cost={({ filterType, payload }) =>
             applyFilters({ filterType, payload })
           }
+          cousine={({ filterType, payload }) =>
+            applyFilters({ filterType, payload })
+          }
+          cousines={cousinesTypes}
         />
 
         <StyledRestaurantsPageContainer>
@@ -100,20 +122,43 @@ const Restaurants: React.FC<RouteComponentProps<RProps>> = (props) => {
             {location.state.name}
           </StyledH3>
 
-          <StyledRestaurantsContainer>
-            {data.map((es, index) => (
-              <RestaurantBox
-                id={IDS[index]}
-                key={es.restaurant.id}
-                location={es.restaurant.location}
-                cuisines={es.restaurant.cuisines}
-                currency={es.restaurant.currency}
-                name={es.restaurant.name}
-                phoneNumbers={es.restaurant.phoneNumbers}
-                image={`"${es.restaurant.photos_url}"`}
-              />
-            ))}
-          </StyledRestaurantsContainer>
+          {allFiltered.length === 0 ? (
+            <StyledRestaurantsContainer>
+              {data.map((es, index) => (
+                <RestaurantBox
+                  id={IDS[index]}
+                  key={es.restaurant.id}
+                  location={es.restaurant.location}
+                  cuisines={es.restaurant.cuisines}
+                  currency={es.restaurant.currency}
+                  name={es.restaurant.name}
+                  phoneNumbers={es.restaurant.phoneNumbers}
+                  image={`"${es.restaurant.photos_url}"`}
+                  average_cost_for_two={es.restaurant.average_cost_for_two}
+                />
+              ))}
+            </StyledRestaurantsContainer>
+          ) : null}
+
+          {allFiltered.length > 0 ? (
+            <StyledRestaurantsContainer>
+              {allFiltered.map((es, index) => (
+                <RestaurantBox
+                  id={IDS[index]}
+                  key={es.restaurant.id}
+                  location={es.restaurant.location}
+                  cuisines={es.restaurant.cuisines}
+                  currency={es.restaurant.currency}
+                  name={es.restaurant.name}
+                  phoneNumbers={es.restaurant.phoneNumbers}
+                  image={`"${es.restaurant.photos_url}"`}
+                  average_cost_for_two={es.restaurant.average_cost_for_two}
+                />
+              ))}
+            </StyledRestaurantsContainer>
+          ) : (
+            <h1>Nenhum filtro</h1>
+          )}
         </StyledRestaurantsPageContainer>
       </Container>
     </>
